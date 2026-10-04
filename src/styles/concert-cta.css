@@ -1,0 +1,110 @@
+/* CTA после альбомов — фон concert.jpg, наши шрифты и акцент */
+.concert-cta {
+  position: relative;
+  min-height: 42vh;
+  background: url('/concert.webp') center / cover no-repeat;
+  overflow: hidden;
+  scroll-margin-top: 72px; /* чтобы якорь не уехал под фикс‑навигацию */
+}
+.concert-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(0,0,0,0.25) 0%,
+    rgba(0,0,0,0.45) 40%,
+    rgba(0,0,0,0.65) 100%
+  );
+  pointer-events: none;
+}
+.concert-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 40px;
+  text-align: center;
+  color: #fff;
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+.concert-title {
+  font-family: 'Anton', Impact, 'Oswald', 'Arial Black', sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: .95;
+  letter-spacing: .01em;
+  color: #e6e6e6;
+  margin: 0;
+}
+.concert-subtitle {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  max-width: 760px;
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.5;
+  color: #eaeaea;
+  margin: 0;
+}
+.concert-cta-row {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;        /* было 8px — опустили блок ниже */
+}
+
+/* Плитки-кнопки: тёмный фон, светлая рамка, скругление */
+.concert-tile {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);         /* полупрозрачный */
+  backdrop-filter: blur(8px);                  /* блюр заднего фона */
+  -webkit-backdrop-filter: blur(8px);          /* сафари */
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 2px 0 rgba(255,255,255,0.08) inset;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease, background .18s ease;
+}
+.concert-tile:hover {
+  background: rgba(255,255,255,0.14);          /* чуть ярче на ховере */
+  border-color: rgba(255,255,255,0.45);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+  transform: translateY(-1px);
+}
+
+/* Метка внутри плитки — строчные буквы, как на фото */
+.tile-label {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: lowercase;
+}
+.concert-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 18px;
+  font-size: 16px;
+  border-radius: 0;
+  background: var(--accent, #FD2885);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .01em;
+  border: none;
+}
+.concert-link:hover { filter: brightness(0.96); }
+
+.cta-icon {
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; color: #000;
+  border-radius: 0;
+  font-size: 14px;
+}

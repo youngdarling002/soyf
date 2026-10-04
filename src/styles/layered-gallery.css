@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.layered-gallery {
+  background: #f0efea;
+  color: #111;
+  padding: 28px 16px 36px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  scroll-margin-top: 72px; /* чтобы якорь не уехал под фикс‑навигацию */
+}
+.gallery-inner { max-width: 1120px; margin: 0 auto; }
+
+/* больший отступ от заголовка */
+.gallery-title {
+  font-family: 'Anton', Impact, 'Oswald', 'Arial Black', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  line-height: .9;
+  font-size: clamp(28px, 5vw, 56px);
+  margin: 0 0 28px; /* было 16px */
+}
+/* размеры контейнера под горизонтальные карточки */
+.gallery-stack {
+  position: relative;
+  width: min(92vw, 960px);
+  height: 600px;            /* Увеличили высоту контейнера (было 430px), чтобы вместить раздвинутые карточки */
+  margin: 0 auto;
+  margin-top: 4px;
+}
+
+/* БАЗОВОЕ ПОЗИЦИОНИРОВАНИЕ СЛОЁВ — ЦЕНТР С ОФФСЕТАМИ */
+.stack-item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) rotate(var(--rot, 0deg));
+  transition: transform .55s cubic-bezier(.22,.61,.36,1);
+  z-index: var(--z, 1);
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.18));
+  margin: 0; /* убираем дефолтный отступ figure, чтобы не было зазоров */
+}
+
+/* Стартовые оффсеты для красивого «стека» */
+.stack-item:nth-child(1) { --dx: -90px;  --dy: -40px; --rot: -6deg; --z: 6; }
+.stack-item:nth-child(2) { --dx:  36px;  --dy: -50px; --rot:  5deg;  --z: 5; }
+.stack-item:nth-child(3) { --dx: -14px;  --dy:  10px; --rot: -3deg; --z: 4; }
+.stack-item:nth-child(4) { --dx: 100px;  --dy:  18px; --rot:  7deg;  --z: 3; }
+.stack-item:nth-child(5) { --dx: -120px; --dy:  36px; --rot: -8deg; --z: 2; }
+.stack-item:nth-child(6) { --dx:  12px;  --dy:   0px; --rot:  0deg;  --z: 1; }
+
+/* единый размер карточки — горизонтальная ориентация */
+.stack-item img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid rgba(0,0,0,0.25);
+  background: #eaeaea;
+  display: block;
+}
+/* подпись-плашка под фото — как на референсе */
+.stack-caption {
+  width: 300px;
+  box-sizing: border-box;
+  margin-top: 0;          /* было 8px — убираем зазор между фото и подписью */
+  padding: 10px 12px;
+  background: #f3e1db;
+  border: 1px solid rgba(0,0,0,0.25);
+  border-top: none;       /* чтобы не было «двойной» линии между фото и подписью */
+  color: #111;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.caption-text { letter-spacing: .01em; }
+.caption-star {
+  font-family: 'Anton', Impact, 'Oswald', 'Arial Black', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* раскладка в сетку шире по горизонтали и больше по вертикали, чтобы не перекрывались */
+.gallery-stack:hover .stack-item { --rot: 0deg; --z: 1; }
+.gallery-stack:hover .stack-item:nth-child(1) { --dx: -340px; --dy: -140px; }
+.gallery-stack:hover .stack-item:nth-child(2) { --dx:    0px; --dy: -140px; }
+.gallery-stack:hover .stack-item:nth-child(3) { --dx:  340px; --dy: -140px; }
+.gallery-stack:hover .stack-item:nth-child(4) { --dx: -340px; --dy:  140px; }
+.gallery-stack:hover .stack-item:nth-child(5) { --dx:    0px; --dy:  140px; }
+.gallery-stack:hover .stack-item:nth-child(6) { --dx:  340px; --dy:  140px; }
+
+/* хинт не используется */
+.gallery-hint { display: none; }

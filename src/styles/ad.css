@@ -1,0 +1,28 @@
+.ad-section { display: flex; justify-content: center; padding: 20px 16px 8px; }
+.ad-inner { width: 100%; max-width: 1120px; margin: 0 auto; }
+.ad-slider {
+  position: relative; height: 260px; border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px; overflow: hidden; background: #0b0b0b;
+}
+.ad-slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.02); transition: opacity .35s ease, transform .35s ease; pointer-events: none; display: grid; }
+.ad-slide.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+.ad-slide img { width: 100%; height: 100%; object-fit: cover; }
+.ad-caption {
+  position: absolute; left: 12px; bottom: 12px; padding: 6px 10px;
+  border-radius: 8px; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px);
+  color: #fff; font-size: 13px; border: 1px solid rgba(255,255,255,0.15);
+}
+.ad-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px;
+  border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.5); cursor: pointer;
+}
+.ad-nav:hover { border-color: var(--accent); background: rgba(0,0,0,0.6); }
+.ad-nav.prev { left: 12px; } .ad-nav.next { right: 12px; }
+.ad-nav::before {
+  content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 12px;
+  border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: translate(-50%, -50%) rotate(45deg);
+}
+.ad-nav.next::before { transform: translate(-50%, -50%) rotate(-135deg); }
+.ad-dots { position: absolute; left: 12px; bottom: 12px; display: flex; gap: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.5); cursor: pointer; }
+.dot.active { background: #fff; border-color: #fff; }

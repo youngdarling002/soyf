@@ -1,0 +1,553 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.events-section {
+  width: 100%;
+  padding: 60px 40px;
+  background: #0f0f0f;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  scroll-margin-top: 80px;
+}
+
+.events-container {
+  width: calc(100% - (var(--nav-gap-x) * 2));
+  margin: 0 var(--nav-gap-x);
+  display: flex;
+  gap: 40px;
+  align-items: stretch;
+  position: relative;
+}
+
+/* Sidebar for Vertical Text (Right Side) */
+.events-sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  flex-shrink: 0;
+  /* border-left removed */
+}
+
+.events-vertical-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #FD2885;
+  font-size: 64px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Main Content Area */
+.events-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* Events hover ribbon */
+.events-ribbon {
+  position: relative;
+  width: 100vw;               /* full-bleed */
+  margin-left: calc(50% - 50vw);  /* anchor to viewport left */
+  margin-right: 0;
+  --rH: clamp(90px, 16vh, 160px);
+  padding-top: calc(var(--rH) * 0.3); /* room above for items to grow upward */
+}
+.ribbon-wrapper {
+  display: grid;
+  gap: 18px;
+  margin: 18px 0 8px;
+}
+.ribbon-section {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);  /* anchor to viewport left */
+  margin-right: 0;
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+.ribbon-title {
+  margin-left: 12px;
+  font-family: 'Anton', sans-serif;
+  font-size: 14px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #bdbdbd;
+}
+.ribbon-track {
+  display: flex;
+  gap: 0;                     /* no spacing between items */
+  align-items: flex-end;
+  overflow: visible;
+  padding: 0;
+  justify-content: flex-start;
+  width: 100%;
+  height: var(--rH);          /* fixed height — items grow upward via overflow visible */
+}
+.ribbon-item {
+  --scale: 1;
+  position: relative;
+  margin: 0;                  /* ensure no gaps */
+  height: calc(var(--h, var(--rH)) * var(--scale)); /* scale height with same factor as width */
+  width: calc(var(--wt, 120) * var(--scale) * 1px);
+  flex: 0 0 auto;             /* keep natural/controlled width, no stretching */
+  transform-origin: bottom center;
+  transition: width .35s cubic-bezier(0.22, 1, 0.3, 1),
+              height .35s cubic-bezier(0.22, 1, 0.3, 1),
+              filter .3s ease;
+  will-change: width, height;
+  z-index: 1;
+  min-width: 0;
+  align-self: flex-end;       /* anchor to bottom so growth goes upward */
+}
+.ribbon-item img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;        /* never crop */
+  pointer-events: none;       /* avoid grabbing image itself */
+  user-select: none;
+  -webkit-user-drag: none;
+}
+/* Hover scaling is applied via inline --scale from JS to avoid gaps */
+/* Upcoming Event Block */
+.upcoming-event {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background: rgba(255,255,255,0.04);
+  border: none; /* Removed border around the whole block */
+  padding: 0;
+  position: relative;
+}
+
+/* Zigzag decoration at bottom of upcoming event */
+.upcoming-event::after {
+  content: "";
+  position: absolute;
+  bottom: -20px; /* Position BELOW the block */
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: rgba(255,255,255,0.04);
+  /* Zigzag mask */
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='40' height='20' viewBox='0 0 40 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L20 20 L40 0 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg width='40' height='20' viewBox='0 0 40 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L20 20 L40 0 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 40px 20px;
+  mask-size: 40px 20px;
+  -webkit-mask-repeat: round;
+  mask-repeat: round;
+}
+
+.upcoming-image-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 150px; /* Further reduced min-height */
+  overflow: hidden;
+  max-width: 90%; /* Reduce width slightly to help overall balance */
+}
+
+.upcoming-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.upcoming-event:hover .upcoming-image {
+  transform: scale(1.03);
+}
+
+.upcoming-info {
+  padding: 20px 20px 20px 0; /* Reduced padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.event-tag {
+  color: #FD2885;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.event-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 36px; /* Reduced font size */
+  line-height: 1.1;
+  margin: 0 0 16px 0; /* Reduced margin */
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Reduced gap */
+  margin-bottom: 24px; /* Reduced margin */
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #dcdcdc;
+  font-size: 16px;
+}
+
+.meta-icon-svg {
+  flex-shrink: 0;
+  color: #FD2885; /* Make icons pink/accent color if desired, or keep current color */
+}
+
+/* Countdown Timer */
+.event-timer {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Reduced gap */
+  margin-bottom: 24px; /* Reduced margin */
+  background: rgba(0,0,0,0.3);
+  padding: 16px 24px; /* Reduced padding */
+  border: 1px solid rgba(253, 40, 133, 0.3);
+}
+
+.timer-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-val {
+  font-family: 'Anton', sans-serif;
+  font-size: 48px; /* Larger font */
+  color: #fff;
+  line-height: 1;
+}
+
+.timer-label {
+  font-size: 12px; /* Slightly larger label */
+  color: #FD2885;
+  letter-spacing: 0.1em;
+  margin-top: 6px;
+}
+
+.timer-sep {
+  font-family: 'Anton', sans-serif;
+  font-size: 36px; /* Larger separator */
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 16px; 
+}
+
+/* Ticket Button */
+.event-ticket-btn {
+  display: inline-block;
+  background: #FD2885;
+  color: #fff;
+  padding: 16px 32px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  border: 1px solid #FD2885;
+  position: relative;
+  z-index: 5; /* Ensure button stays above overlapping elements */
+}
+
+.event-ticket-btn:hover {
+  background: transparent;
+  color: #FD2885;
+}
+
+/* Past Events Compact */
+.past-events-compact {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: none;
+  position: relative;
+  z-index: 1;
+  padding-left: 24px;
+  min-height: 300px;
+}
+
+.past-events-compact-title {
+  color: #FD2885;
+  font-weight: 800;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.compact-card {
+  width: 280px; 
+  height: 220px; 
+  min-height: 0;
+  padding: 0;
+  max-width: 100%;
+  position: relative;
+  overflow: visible; 
+  border: none;
+  background: transparent;
+  margin-bottom: 36px;
+}
+
+/* Image fills the card container */
+.compact-card .poster-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transform: scale(1.0); /* Reset scale */
+  transition: transform 0.3s ease;
+}
+
+.compact-card:hover .poster-img {
+  transform: scale(1.03); 
+}
+
+/* Hide old internal structure */
+.compact-card .card-top, 
+.compact-card .card-bottom {
+  display: none; 
+}
+
+/* Caption BELOW the card */
+.card-caption-overlay {
+  position: absolute;
+  bottom: -32px;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: .04em;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  z-index: 2;
+  text-shadow: none; 
+}
+
+/* Hide the old number overlay */
+.card-number-overlay {
+  display: none;
+}
+
+/* New number below the card */
+.card-number-below {
+  position: absolute;
+  bottom: -32px;
+  right: 0;
+  font-family: 'Anton', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  line-height: 1.2;
+}
+
+.past-events-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* Hide mobile header by default */
+.mobile-event-header {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .events-container {
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 16px; /* Add padding to container on mobile */
+  }
+
+  .events-section {
+    padding: 40px 0; /* Remove side padding on section level, handle in container */
+  }
+/* ... existing 900px styles ... */
+  .upcoming-event {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .past-events-row {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .compact-card {
+    width: calc(50% - 16px);
+    height: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+  .events-sidebar {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .events-vertical-title {
+    writing-mode: initial;
+    transform: none;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    color: #FD2885;
+  }
+
+  /* Show Mobile Header, Hide Desktop Header */
+  .mobile-event-header {
+    display: block;
+    padding: 0 0 16px 0;
+  }
+  .desktop-event-header {
+    display: none;
+  }
+
+  /* Grid Layout for Mobile: Title Top, then Row [Image | Info] */
+  .upcoming-event {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Content Row Wrapper (Simulated via flex/grid) */
+  /* Since we can't wrap Image + Info in a new div without major refactor, 
+     we will use a grid on the parent container to position them side-by-side below header?
+     Wait, DOM is:
+     1. mobile-header
+     2. image-wrapper
+     3. info
+     
+     We want 2 and 3 to be side-by-side.
+     So parent .upcoming-event needs to be a Grid?
+     
+     Grid Template:
+     "header header"
+     "image info"
+  */
+  .upcoming-event {
+    display: block;
+    padding: 0;
+  }
+
+  .mobile-event-header {
+    grid-column: 1 / -1; /* Full width */
+  }
+
+  .upcoming-image-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 0; /* Allow small height */
+    height: 100%; /* Fill row */
+    max-height: 180px; /* Limit height */
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 3/4; /* Vertical portrait for mobile small? or square? */
+  }
+
+  .upcoming-info {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 0; /* Remove padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  /* Adjust inner elements for small space */
+  .event-meta {
+    margin-bottom: 12px;
+    gap: 4px;
+  }
+  
+  .meta-row {
+    font-size: 12px; /* Smaller text */
+    gap: 6px;
+  }
+  
+  .meta-icon-svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .event-timer {
+    display: none; /* Hide timer on mobile compact view? Or make very small */
+    /* User said "detailed info and buy button on right". Timer might be too big. Let's hide or scale. */
+  }
+  
+  /* If timer is hidden, we have space. */
+  
+  .event-ticket-btn {
+    padding: 10px 16px;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    margin-top: auto; /* Push to bottom */
+  }
+
+  /* Past events in info? They might be too squished. Hide or move? */
+  .past-events-compact {
+    display: block;
+    padding-left: 12px;
+    min-height: auto;
+  }
+  
+  .past-events-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    justify-items: stretch;
+  }
+  
+  .compact-card {
+    width: 100%;
+    height: 140px;
+    margin-bottom: 24px;
+  }
+  .past-events-compact-title {
+    white-space: nowrap;
+  }
+  
+  /* Title styles in mobile header */
+  .mobile-event-header .event-title {
+    font-size: 28px;
+    margin: 0;
+  }
+  
+  .mobile-event-header .event-tag {
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .card-caption-overlay {
+    bottom: -22px;
+    font-size: 12px;
+  }
+}

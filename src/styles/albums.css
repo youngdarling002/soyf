@@ -1,0 +1,227 @@
+/* Альбомы — контейнер и сетка (светлая тема) */
+.albums {
+  width: 100%;
+  background: #e8e6e0;
+  color: #111;
+  padding: 36px 40px 24px;
+  box-sizing: border-box;
+}
+.albums-inner { width: 100%; max-width: 1120px; margin: 0 auto; }
+
+.albums-grid {
+  display: grid;
+  /* 5 в ряд, равномерно делим ширину контейнера 1120px */
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 18px;  /* как в прайс-листе */
+  row-gap: 20px;
+  max-width: 1120px; /* совпадает с pricing-inner */
+  margin: 0 auto;    /* центрируем контейнер, чтобы правый край совпал */
+}
+
+/* Карточка (невскрытая) — постерная компоновка */
+.album-card {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 8px;
+  border: 1px solid transparent; /* резерв под бордер */
+  border-radius: 0;
+  cursor: pointer;
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+/* Ховер карточки: тень, небольшой подъем */
+.album-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  /* Розовый бордер убираем, если он не нужен */
+  /* border-color: var(--accent); */
+}
+
+/* Картинка — строго квадрат */
+.album-item {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden; /* чтобы блюр не вылезал */
+  background: #fff; /* Фон карточки белый */
+  border: 1px solid #fff; /* Граница белая */
+  border-radius: 0;
+}
+.album-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease; /* плавный переход для блюра */
+}
+
+/* Оверлей отключаем, чтобы картинка не становилась розовой */
+.album-overlay { display: none !important; }
+
+/* Новый оверлей с количеством треков */
+.album-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2); /* Лёгкий светлый фон */
+  backdrop-filter: blur(4px); /* Эффект размытия */
+  -webkit-backdrop-filter: blur(4px); /* Safari support */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* чтобы клик проходил сквозь */
+}
+
+/* Текст внутри оверлея */
+.tracks-count-label {
+  color: #000;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.6); /* Полупрозрачная подложка под текст для читаемости */
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+/* Показываем оверлей при наведении */
+.album-card:hover .album-hover-overlay {
+  opacity: 1;
+}
+
+/* Поле с текстом под картинкой — окрашивается в розовый на ховере карточки */
+.album-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #eaeaea;
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 0;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+/* При наведении карточки фон у meta остаётся в тон (розовый от родителя) */
+.album-card:hover .album-meta {
+  background: transparent;              /* фон берём от .album-card (розовый) */
+  border-color: transparent;
+}
+.album-title { color: #111; font-size: 12px; line-height: 1.4; text-align: left; }
+.album-info  { display: inline-flex; align-items: center; gap: 6px; color: #111; }
+.vinyl-icon { width: 16px; height: 16px; display: inline-block; }
+.track-count { font-size: 12px; font-weight: 600; letter-spacing: .02em; }
+
+/* При открытии детали — невыбранные тускнеют */
+.album-card.is-dim {
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  pointer-events: none;
+}
+
+/* Выбранная карточка по центру — светлая тема */
+.album-card.is-selected {
+  grid-column: 2 / span 3;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  align-items: start;
+  gap: 20px;
+}
+.selected-cover { border-color: rgba(0,0,0,0.35); box-shadow: 0 4px 24px rgba(0,0,0,0.15); }
+.album-card.is-selected .album-item {
+  aspect-ratio: 1 / 1 !important;
+  background: #f7f5f0 !important;
+  border: 1px solid rgba(0,0,0,0.25) !important;
+}
+
+/* Заголовок и треки в деталях */
+.album-expanded { padding-top: 4px; animation: expandFade .22s ease; }
+@keyframes expandFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.album-expanded-header {
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding-bottom: 10px; margin-bottom: 16px;
+}
+.album-expanded-title { color: #111 !important; font-weight: 700; letter-spacing: .04em; }
+
+.album-tracks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.track-row {
+  display: grid; grid-template-columns: 1fr auto; align-items: center;
+  gap: 12px; padding: 10px 12px; background: #f7f5f0;
+  border: 1px solid rgba(0,0,0,0.18); border-radius: 0;
+}
+.track-name { color: #111 !important; }
+.track-play {
+  padding: 6px 10px; border: 1px solid rgba(0,0,0,0.25);
+  background: #fff; color: #111; border-radius: 0; cursor: pointer;
+}
+.track-play:hover { border-color: var(--accent) !important; background: #f3f3f3 !important; }
+
+/* Откритая (выбранная) карточка — шире и без розового ховера */
+.album-card.is-selected {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 1120px;
+  display: grid;
+  grid-template-columns: 280px 1fr; /* левая колонка шире для текста + фото */
+  gap: 20px;
+  background: #f5f4f1;
+  border-color: rgba(0,0,0,0.25);
+  box-shadow: none;
+}
+
+/* на выбранной карточке ховер не перекрашивает фон в розовый */
+.album-card.is-selected:hover {
+  background: #f5f4f1;
+  border-color: rgba(0,0,0,0.25);
+  transform: none;
+  box-shadow: none;
+}
+
+/* поле под картинкой в выбранной карточке тоже остаётся светлым */
+.album-card.is-selected:hover .album-meta {
+  background: inherit;
+  border-color: rgba(0,0,0,0.25);
+  color: #111;
+}
+.album-expanded-title { color: #111 !important; font-weight: 700; letter-spacing: .04em; }
+
+.album-tracks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.track-row {
+  display: grid; grid-template-columns: 1fr auto; align-items: center;
+  gap: 12px; padding: 10px 12px; background: #f7f5f0;
+  border: 1px solid rgba(0,0,0,0.18); border-radius: 0;
+}
+.track-name { color: #111 !important; }
+.track-play {
+  padding: 6px 10px; border: 1px solid rgba(0,0,0,0.25);
+  background: #fff; color: #111; border-radius: 0; cursor: pointer;
+}
+.track-play:hover { border-color: var(--accent) !important; background: #f3f3f3 !important; }
+/* Левая колонка: Back и заголовок сверху, фото ниже */
+.selected-left {
+  display: grid;
+  grid-template-rows: auto auto auto; /* Back, title, фото */
+  align-content: start;
+  gap: 8px;
+}
+.album-back {
+  justify-self: start;
+  font-size: 14px;
+  letter-spacing: .02em;
+  color: #111;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.album-title {
+  justify-self: start;
+  font-size: 18px;
+  margin: 0;
+  color: #111;
+}
+/* Фото чуть ниже заголовка */
+.selected-cover {
+  margin-top: 6px; /* опускаем фото относительно заголовка */
+}

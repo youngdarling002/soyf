@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;700&display=swap');
+
+/* ── Section shell ── */
+.works-section {
+  width: 100%;
+  padding: 72px 40px 80px;
+  background: #111;
+  color: #fff;
+  scroll-margin-top: 80px;
+}
+.works-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.works-heading {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(36px, 6vw, 72px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 56px;
+  color: #fff;
+  line-height: 1;
+}
+.works-heading span {
+  color: #F9C709;
+}
+
+/* ── Track list ── */
+.works-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Single track card ── */
+.works-track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 28px 32px;
+  transition: border-color 0.2s ease;
+}
+.works-track:hover {
+  border-color: #444;
+}
+
+/* ── TE button panel ── */
+.te-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.te-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* Dark housing square around each button */
+.te-btn-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: #171717;
+  border-radius: 6px;
+}
+
+/* Base button reset */
+.te-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: box-shadow 0.1s ease-in-out, transform 0.1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Grey — minus */
+.te-btn--minus {
+  background: #c7c3c0;
+  box-shadow:
+    rgba(0,0,0,0.38) 8px 8px 8px,
+    #fff 1.5px 1.5px 2px 0 inset,
+    #c7c3c0 -3px -3px 8px 0 inset;
+}
+.te-btn--minus svg {
+  width: 22px;
+  height: 22px;
+  fill: #5f5f5f;
+  transition: transform 0.1s ease;
+}
+.te-btn--minus:active {
+  box-shadow: rgba(0,0,0,0.38) 0 0 0, inset 0.5px 0.5px 4px #000, #c7c3c0 -3px -3px 8px 0 inset;
+}
+.te-btn--minus:active svg { transform: scale(0.93); }
+
+/* Grey — plus */
+.te-btn--plus {
+  background: #c7c3c0;
+  box-shadow:
+    rgba(0,0,0,0.38) 8px 8px 8px,
+    #fff 1.5px 1.5px 2px 0 inset,
+    #c7c3c0 -3px -3px 8px 0 inset;
+}
+.te-btn--plus svg {
+  width: 22px;
+  height: 22px;
+  fill: #5f5f5f;
+  transition: transform 0.1s ease;
+}
+.te-btn--plus:active {
+  box-shadow: rgba(0,0,0,0.38) 0 0 0, inset 0.5px 0.5px 4px #000, #c7c3c0 -3px -3px 8px 0 inset;
+}
+.te-btn--plus:active svg { transform: scale(0.93); }
+
+/* Red — RECORD */
+.te-btn--record {
+  background: #d42a02;
+  box-shadow:
+    rgba(0,0,0,0.38) 8px 8px 8px,
+    #fb702c 2px 2px 10px 0 inset,
+    #d42a02 -4px -4px 1px 0 inset;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+.te-btn--record:active {
+  box-shadow: rgba(0,0,0,0.38) 0 0 0, inset 0.5px 0.5px 4px #000, #d42a02 -3px -3px 8px 0 inset;
+}
+.te-btn--record:active .te-btn-text { transform: translateY(1px); }
+
+/* Dark — PLAY */
+.te-btn--play {
+  background: #545251;
+  box-shadow:
+    rgba(0,0,0,0.38) 8px 8px 8px,
+    #a8a6a4 1.5px 1.5px 1px 0 inset,
+    #545251 -3px -3px 8px 0 inset;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+.te-btn--play:active {
+  box-shadow: rgba(0,0,0,0.38) 0 0 0, inset 0.5px 0.5px 4px #000, #545251 -3px -3px 8px 0 inset;
+}
+.te-btn--play:active .te-btn-text { transform: translateY(1px); }
+
+.te-btn-text {
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  transition: transform 0.1s ease;
+}
+
+/* ── Track info (right of buttons) ── */
+.works-track-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.works-track-number {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #555;
+  text-transform: uppercase;
+}
+.works-track-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(20px, 2.5vw, 30px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.1;
+}
+.works-track-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+.works-track-tag {
+  font-size: 11px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 3px 10px;
+}
+.works-track-tag--accent {
+  color: #F9C709;
+  border-color: rgba(249,199,9,0.3);
+  background: rgba(249,199,9,0.07);
+}
+
+/* ── TE label ── */
+.te-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #444;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .works-section { padding: 48px 16px 56px; }
+  .works-track {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+  }
+  .te-btn-wrap { width: 44px; height: 44px; }
+  .te-btn { width: 50px; height: 50px; }
+}

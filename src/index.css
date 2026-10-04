@@ -1,0 +1,82 @@
+/* Импорты секций; hero.css убран, чтобы не конфликтовать с isolated-стилями */
+@import './styles/ad.css';
+@import './styles/studio.css';
+@import './styles/pricing.css';
+@import './styles/albums.css';
+@import './styles/poster.css';
+@import './styles/works.css';
+@import './styles/navbar.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Базовые стили без Tailwind */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  background: #000;
+  color: #fff;
+  font-family: 'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  cursor: none; /* скрываем системный курсор */
+}
+/* На мобильных системный курсор возвращаем (нет мыши) */
+@media (hover: none) {
+  body { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ── Кастомный курсор ── */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  /* translate(-50%,-50%) центрирует элемент на позиции мыши */
+}
+
+/* Маленькая точка */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  margin-left: -4px;
+  margin-top: -4px;
+  transition: opacity 0.2s ease;
+  mix-blend-mode: difference;
+}
+
+/* Большое кольцо — следует с лагом */
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  margin-left: -18px;
+  margin-top: -18px;
+  transition:
+    width  0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    margin 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.25s ease,
+    opacity 0.2s ease;
+  mix-blend-mode: difference;
+}
+
+/* При наведении на кликабельное — кольцо увеличивается */
+.cursor-ring.is-hovering {
+  width: 60px;
+  height: 60px;
+  margin-left: -30px;
+  margin-top: -30px;
+  border-color: rgba(255, 255, 255, 1);
+}

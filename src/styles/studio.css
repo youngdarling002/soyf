@@ -1,0 +1,429 @@
+.studio-section {
+  width: 100%;
+  padding: 60px 40px;
+  background: #0f0f0f;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  scroll-margin-top: 80px;
+}
+.studio-container {
+  width: calc(100% - (var(--nav-gap-x) * 2));
+  margin: 0 var(--nav-gap-x);
+  display: flex;
+  gap: 40px;
+  align-items: stretch;
+  position: relative;
+}
+
+/* Sidebar for Vertical Text */
+.studio-sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  flex-shrink: 0;
+  /* No border as requested previously for others */
+}
+
+.studio-vertical-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #FD2885; /* Changed from var(--accent) to match PRICE LIST specific color if needed, or keep variable if consistent */
+  font-size: 64px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.studio-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.studio-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 50% / 50% split */
+  gap: 32px;
+  width: 100%;
+  align-items: start;
+}
+
+/* Left Column: Mosaic Photo Grid */
+.studio-col-left {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Updated Mosaic Grid for 9+ photos, forming a solid block */
+.studio-photo-mosaic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for denser look in smaller space */
+  grid-auto-rows: 100px; /* Reduced base row height */
+  gap: 12px; /* Increased gap from 4px to 12px */
+}
+
+.mosaic-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: #0b0b0b;
+  border: none; /* No border for seamless look, or keep minimal */
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.mosaic-item:hover {
+  filter: brightness(1.1);
+  z-index: 2;
+  /* transform: scale(1.02); Optional: zoom slightly on hover */
+}
+
+.mosaic-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  content-visibility: auto;
+  contain-intrinsic-size: 150px 100px;
+}
+
+/* Custom Mosaic Layout for ~9 items */
+/* Row 1 */
+.mosaic-item.item-0 {
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2; /* Large: 2x2 */
+}
+.mosaic-item.item-1 {
+  grid-column: 3;
+  grid-row: 1; /* 1x1 */
+}
+.mosaic-item.item-2 {
+  grid-column: 3;
+  grid-row: 2; /* 1x1 */
+}
+
+/* Row 2 (Actually row 3 in grid terms if counting from top) */
+.mosaic-item.item-3 {
+  grid-column: 1;
+  grid-row: 3; /* 1x1 */
+}
+.mosaic-item.item-4 {
+  grid-column: 2 / span 2;
+  grid-row: 3; /* Wide: 2x1 */
+}
+
+/* Row 3 (Grid row 4) */
+.mosaic-item.item-5 {
+  grid-column: 1 / span 2;
+  grid-row: 4; /* Wide: 2x1 */
+}
+.mosaic-item.item-6 {
+  grid-column: 3;
+  grid-row: 4; /* 1x1 */
+}
+
+/* Row 4 (Grid row 5) */
+.mosaic-item.item-7 {
+  grid-column: 1;
+  grid-row: 5; /* 1x1 */
+}
+.mosaic-item.item-8 {
+  grid-column: 2 / span 2;
+  grid-row: 5; /* Wide: 2x1 */
+}
+
+/* Any extra items fill 1x1 automatically */
+.mosaic-item:nth-child(n+10) {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+
+/* Right Column: Info & Compact Gear */
+.studio-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.studio-desc {
+  display: none; 
+}
+
+/* Location Card */
+.location-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-margin-top: 100px;
+}
+
+.location-card {
+  width: 100%;
+  height: 200px; /* Increased height for map */
+  background: #222; 
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.location-address {
+  font-size: 13px;
+  color: #fff;
+  opacity: 0.8;
+  padding-left: 4px;
+  border-left: 2px solid var(--accent);
+}
+
+@media (min-width: 901px) {
+  .location-address {
+    white-space: nowrap;
+  }
+}
+
+/* Compact Gear Grid */
+.gear-grid-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Override Gear Item styles for compact view */
+.gear-grid-compact .gear-card {
+  padding: 6px 10px;
+  min-height: auto;
+  height: auto;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+}
+.gear-grid-compact .gear-card:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.gear-grid-compact .gear-name {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Tooltip adjustment */
+.gear-grid-compact .pricing-tooltip {
+  width: 200px;
+  text-align: left;
+  z-index: 100;
+}
+
+/* Button styles removed as button is removed */
+.gear-show-more-btn {
+  display: none;
+}
+.mobile-gear-expand {
+  display: none;
+}
+
+
+/* Responsive */
+@media (max-width: 900px) {
+  .studio-section {
+    padding: 40px 0;
+  }
+  .studio-container {
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 16px;
+  }
+  
+  .studio-sidebar {
+    width: 100%;
+    height: auto;
+    justify-content: flex-start;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .studio-vertical-title {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 32px;
+  }
+
+  .studio-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .studio-photo-mosaic {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 42vw; /* высота ячеек зависит от ширины экрана для мобильных */
+    gap: 12px;
+    scroll-margin-top: 90px; /* корректное позиционирование при скролле к фото */
+  }
+  
+  /* Reset complex grid for mobile simple 2-col */
+  .mosaic-item.item-0, .mosaic-item.item-1, .mosaic-item.item-2,
+  .mosaic-item.item-3, .mosaic-item.item-4, .mosaic-item.item-5,
+  .mosaic-item.item-6, .mosaic-item.item-7, .mosaic-item.item-8 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  
+  /* Make some items span 2 cols for variety */
+  .mosaic-item:nth-child(3n+1) {
+    grid-column: span 2;
+  }
+}
+
+/* Old styles to clean up or overwrite if necessary */
+.studio-layout { display: none; } /* Hide old layout */
+
+/* Lightbox */
+.lightbox { 
+  position: fixed; 
+  inset: 0; 
+  background: rgba(0,0,0,0.85); /* Slightly lighter overlay */
+  z-index: 1000; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+}
+
+.lightbox-content {
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+  background: #0b0b0b;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.lightbox-main {
+  flex: 0 1 auto; /* Don't force stretch */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px; /* Space for thumbnails */
+}
+
+.lightbox-img { 
+  max-width: 100%; 
+  max-height: 60vh; /* Limit height to keep it compact */
+  object-fit: contain; 
+  display: block; 
+}
+
+/* Nav Buttons - closer to image */
+.lightbox-nav { 
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+.lightbox-nav:hover {
+  background: #fff;
+  color: #000;
+}
+.lightbox-nav.prev { left: -20px; margin: 0; } 
+.lightbox-nav.next { right: -20px; margin: 0; }
+
+/* Close Button - top right of content box */
+.lightbox-close {
+  position: absolute; 
+  top: 10px; 
+  right: 10px; 
+  width: 30px; 
+  height: 30px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  color: #fff;
+  font-size: 32px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: none;
+  opacity: 0.7;
+}
+.lightbox-close:hover { 
+  transform: none; 
+  opacity: 1;
+}
+
+
+/* Thumbnails Strip */
+.lightbox-thumbnails {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px;
+  width: 100%; /* Full width of container */
+  background: transparent;
+  border-radius: 0;
+  justify-content: center; /* Center thumbnails */
+}
+
+.lightbox-thumb {
+  width: 80px; /* Wider thumbnail approx same ratio as main image if landscape */
+  height: 50px;
+  flex-shrink: 0;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.2s, transform 0.2s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.lightbox-thumb.active {
+  opacity: 1;
+  border-color: #FD2885;
+  transform: scale(1.05);
+}
+
+.lightbox-thumb:hover {
+  opacity: 0.8;
+}
+
+.lightbox-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
